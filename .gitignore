@@ -1,1 +1,5 @@
 /node_modules
+debug.log
+npm-debug.log
+Thumbs.debug
+.DS_Store
