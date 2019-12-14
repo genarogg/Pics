@@ -17,8 +17,13 @@ app.on("ready", () =>{
         height:600,
         title: "Hola Mundo",
         center: true,
-        maximizable: false
+        maximizable: false,
+        show: false
     });
+
+    win.once("ready-to-show", () => {
+        win.show()
+    })
 
     /*  get position of the windows */
     win.on("move", () =>{
@@ -31,4 +36,7 @@ app.on("ready", () =>{
         win = null,
         app.quit()
     })
+
+    /* Peticiones a un servidor */
+    win.loadURL("http://devdocsl.io/")
 })
