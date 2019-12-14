@@ -18,7 +18,8 @@ app.on("ready", () =>{
         title: "Hola Mundo",
         center: true,
         maximizable: false,
-        show: false
+        show: false,
+        
     });
 
     win.once("ready-to-show", () => {
@@ -38,5 +39,5 @@ app.on("ready", () =>{
     })
 
     /* Peticiones a un servidor */
-    win.loadURL("http://devdocsl.io/")
+    win.loadURL(`file://${__dirname}/index.html`)
 })
