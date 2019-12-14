@@ -20,6 +20,12 @@ app.on("ready", () =>{
         maximizable: false
     });
 
+    /*  get position of the windows */
+    win.on("move", () =>{
+        const position = win.getPosition();
+        console.log(`la posicion es ${position}`)
+    })
+
     /* Detecta el cierre de la ventana para cerrar el aplicativo */
     win.on("closed", () => {
         win = null,
