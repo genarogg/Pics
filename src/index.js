@@ -39,5 +39,5 @@ app.on("ready", () =>{
     })
 
     /* Peticiones a un servidor */
-    win.loadURL(`file://${__dirname}/index.html`)
+    win.loadURL(`file://${__dirname}/renderer/index.html`)
 })
