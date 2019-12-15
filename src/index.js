@@ -1,7 +1,12 @@
 "use strict"
 
 /* Instanciado los objetos app y BrowserWindow */
-const { app, BrowserWindow } = require("electron");
+import { app, BrowserWindow } from "electron";
+import devTools from "./devTools"
+
+if(process.env.NODE_ENV === "development"){
+    devTools()
+}
 
 /* Imprimiendo un mensaje en la consola antes de salir */
 app.on("before-quit", () => {
