@@ -34,7 +34,7 @@ app.on("ready", () =>{
     /*  get position of the windows */
     win.on("move", () =>{
         const position = win.getPosition();
-        console.log(`la posicion es ${position}`)
+        /* console.log(`la posicion es ${position}`) */
     })
 
     /* Detecta el cierre de la ventana para cerrar el aplicativo */
@@ -42,6 +42,9 @@ app.on("ready", () =>{
         win = null,
         app.quit()
     })
+
+    /* Elimina la barra de menu */
+    win.setMenu(null)
 
     /* Peticiones a un servidor */
     win.loadURL(`file://${__dirname}/renderer/index.html`)
