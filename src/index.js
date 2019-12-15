@@ -22,7 +22,7 @@ app.on("ready", () =>{
         height:600,
         title: "Hola Mundo",
         center: true,
-        maximizable: false,
+        /* maximizable: false, */
         show: false,
         
     });
