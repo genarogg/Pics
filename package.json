@@ -4,7 +4,7 @@
   "description": "App of electron",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development electron src/index.js",
+    "dev": "cross-env NODE_ENV=development electron src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
