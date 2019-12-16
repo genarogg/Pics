@@ -48,4 +48,5 @@ app.on("ready", () =>{
 
     /* Peticiones a un servidor */
     win.loadURL(`file://${__dirname}/renderer/index.html`)
+    /* win.toggleDevTools(); */
 })
