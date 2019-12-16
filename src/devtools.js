@@ -3,5 +3,5 @@ import electronDebug from "electron-debug"
 
 module.exports = function devtools() {
     enableLiveReload();
-    electronDebug({ showDevTools: true});
+    electronDebug({ showDevTools: false});
 }
