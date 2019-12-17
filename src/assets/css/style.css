@@ -1,0 +1,10 @@
+.full-height{
+    height: 100%;
+}
+
+.image-view{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    overflow: hidden;
+}
