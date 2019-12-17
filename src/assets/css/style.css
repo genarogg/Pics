@@ -8,3 +8,13 @@
     flex-wrap: wrap;
     overflow: hidden;
 }
+
+.image-container{
+    width: 100%;
+}
+
+.image-toobar{
+    width: 100%;
+    align-self: flex-start;
+    position: absolute;
+}
