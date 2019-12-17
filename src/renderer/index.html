@@ -45,9 +45,22 @@
                         <header class="toolbar toolbar-header image-toolbar">
                             <div class="toolbar-actions">
                                 <div class="btn-group">
-                                 <button class="btn btn-default">
-                                    <span class="icon icon-home"></span>
+                                    <button class="btn btn-default">
+                                        <span class="icon icon-folder icon-text"></span>
+                                        abrir ubicación
+                                    </button>
+                                </div>
+
+                                <button class="btn btn-default pull-right">
+                                    <span class="icon icon-download icon-text"></span>
+                                    Guardar
                                 </button>
+
+                                <select id="filters " class="pull-right">
+                                    <option value="none">Ninguno</option>
+                                    <option value="sepia">Sepia</option>
+                                </select>
+                                <label class="pull-right filter-label" for="">Filtros: </label>
                             </div>
                         </header>
                         <div class="image-container">
