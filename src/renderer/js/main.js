@@ -50,6 +50,14 @@ function searImagesEvent(){
             }
             selectFirsImage()
         }
+        
+        else{
+            const hidden = document.querySelectorAll("li.hidden")
+
+            for(let i = 0, lengthl = hidden.length; i < lengthl; i++){
+                hidden[i].classList.remove("hidden")
+            }
+        }
     })
 }
 
