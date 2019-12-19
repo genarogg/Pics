@@ -48,6 +48,12 @@ function searImagesEvent(){
                     thumbs[i].parentNode.classList.add("hidden")
                 }
             }
+            selectFirsImage()
         }
     })
+}
+
+function selectFirsImage(){
+    const image = document.querySelector("li.list-group-item:not(.hidden)")
+    changeImage(image)
 }
