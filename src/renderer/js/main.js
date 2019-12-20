@@ -1,6 +1,7 @@
 import url from "url"
 import path from "path"
 import applyFilter from "./filters"
+import { setIpc, sendIpc} from "./ipcRendererEvents"
 
 window.addEventListener("load", () => {
     addImagesEvents()
