@@ -20,11 +20,18 @@ function addImagesEvents(){
 
 function changeImage (node) {
 
-    document.querySelector("li.selected").classList.remove("selected");
+    if(node){
+        document.querySelector("li.selected").classList.remove("selected");
 
-    node.classList.add("selected")
-    
-    document.getElementById("image-displayed").src = node.querySelector("img").src
+        node.classList.add("selected")
+        
+        document.getElementById("image-displayed").src = node.querySelector("img").src
+
+    }
+    else{
+        document.getElementById("image-displayed").src = ""
+    }
+
 }
 
 function searImagesEvent(){
