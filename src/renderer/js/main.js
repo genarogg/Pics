@@ -4,6 +4,7 @@ import path from "path"
 window.addEventListener("load", () => {
     addImagesEvents()
     searImagesEvent()
+    selectEvent()
 });
 
 function addImagesEvents(){
@@ -16,6 +17,14 @@ function addImagesEvents(){
     }
 
     
+}
+
+function selectEvent (){
+    const select = document.getElementById("filters")
+
+    select.addEventListener("change", function () {
+        console.log(this.value)
+    })
 }
 
 function changeImage (node) {
@@ -67,6 +76,8 @@ function searImagesEvent(){
         }
     })
 }
+
+
 
 function selectFirsImage(){
     const image = document.querySelector("li.list-group-item:not(.hidden)")
