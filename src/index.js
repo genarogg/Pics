@@ -1,8 +1,10 @@
 "use strict"
 
 /* Instanciado los objetos app y BrowserWindow */
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow, ipcMain, dialog } from "electron";
 import devTools from "./devTools"
+
+let win;
 
 if(process.env.NODE_ENV === "development"){
     devTools()
@@ -16,7 +18,7 @@ app.on("before-quit", () => {
 /* Ejecutando ordenes cuando la app esta lista */
 app.on("ready", () =>{
     /* Crea la ventana */
-    let win = new BrowserWindow({
+    win = new BrowserWindow({
         /* Propiedades de la ventana */
         width: 1500,
         height:800,
@@ -51,7 +53,13 @@ app.on("ready", () =>{
     win.toggleDevTools();
 })
 
-ipcMain.on("ping", (event, arg) => {
-    console.log(`se recibio ping - ${arg}`)
-    event.sender.send("pong", new Date())
+ipcMain.on("open-directory", (event) => {
+    //se nesesita una validacion para windows 
+   dialog.showOpenDialog(win, {
+       title: "Seleccione la nueva ubiacacion",
+        buttonLabel: "abrir Ubicacion",
+        properties: ["openDerectory"]
+   }, (dir) => {
+       console.log(dir)
+   })
 })

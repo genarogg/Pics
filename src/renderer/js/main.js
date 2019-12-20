@@ -1,7 +1,7 @@
 import url from "url"
 import path from "path"
 import applyFilter from "./js/filters"
-import { setIpc, sendIpc } from "./js/ipcRendererEvents";
+import { setIpc, openDirectory } from "./js/ipcRendererEvents";
 
 window.addEventListener("load", () => {
     
@@ -10,15 +10,13 @@ window.addEventListener("load", () => {
     addImagesEvents()
     searImagesEvent()
     selectEvent()
-    openDirectory()
+    buttonEvent("open-directory", openDirectory)
 });
 
-function openDirectory(){
-    const openDirectory = document.getElementById("open-directory")
+function buttonEvent(id, func){
+    const openDirectory = document.getElementById(id)
 
-    openDirectory.addEventListener("click", () => {
-        sendIpc()
-    })
+    openDirectory.addEventListener("click", func)
 }
 
 function addImagesEvents(){
