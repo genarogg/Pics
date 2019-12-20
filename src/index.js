@@ -1,7 +1,7 @@
 "use strict"
 
 /* Instanciado los objetos app y BrowserWindow */
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import devTools from "./devTools"
 
 if(process.env.NODE_ENV === "development"){
@@ -18,8 +18,8 @@ app.on("ready", () =>{
     /* Crea la ventana */
     let win = new BrowserWindow({
         /* Propiedades de la ventana */
-        width: 800,
-        height:600,
+        width: 1500,
+        height:800,
         title: "Hola Mundo",
         center: true,
         /* maximizable: false, */
@@ -48,5 +48,10 @@ app.on("ready", () =>{
 
     /* Peticiones a un servidor */
     win.loadURL(`file://${__dirname}/renderer/index.html`)
-    /* win.toggleDevTools(); */
+    win.toggleDevTools();
+})
+
+ipcMain.on("ping", (event, arg) => {
+    console.log(`se recibio ping - ${arg}`)
+    event.sender.send("pong", new Date())
 })

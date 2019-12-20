@@ -1,13 +1,25 @@
 import url from "url"
 import path from "path"
-import applyFilter from "./filters"
-import { setIpc, sendIpc} from "./ipcRendererEvents"
+import applyFilter from "./js/filters"
+import { setIpc, sendIpc } from "./js/ipcRendererEvents";
 
 window.addEventListener("load", () => {
+    
+    setIpc()
+    
     addImagesEvents()
     searImagesEvent()
     selectEvent()
+    openDirectory()
 });
+
+function openDirectory(){
+    const openDirectory = document.getElementById("open-directory")
+
+    openDirectory.addEventListener("click", () => {
+        sendIpc()
+    })
+}
 
 function addImagesEvents(){
     const thumbs = document.querySelectorAll("li.list-group-item");
