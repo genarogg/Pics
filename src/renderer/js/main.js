@@ -1,5 +1,6 @@
 import url from "url"
 import path from "path"
+import applyFilter from "./filters"
 
 window.addEventListener("load", () => {
     addImagesEvents()
@@ -23,7 +24,7 @@ function selectEvent (){
     const select = document.getElementById("filters")
 
     select.addEventListener("change", function () {
-        console.log(this.value)
+        applyFilter(this.value, document.getElementById("image-displayed"))
     })
 }
 
