@@ -3,6 +3,8 @@
 /* Instanciado los objetos app y BrowserWindow */
 import { app, BrowserWindow, ipcMain, dialog } from "electron";
 import devTools from "./devTools"
+import isImage from "is-image"
+import fs from "fs"
 
 let win;
 
@@ -60,6 +62,18 @@ ipcMain.on("open-directory", (event) => {
         buttonLabel: "abrir Ubicacion",
         properties: ["openDirectory"]
    }, (dir) => {
-       console.log(dir)
+
+        const images = []
+
+        if(dir){
+            fs.readdir(dir[0], (err,files) => {
+                for(let i = 0, lengthl = files.length; i < lengthl; i++){
+                    if(isImage(files[i])){
+                        images.push(files[i])
+                    }
+                }
+                console.log(images)
+            })
+        }
    })
 })
