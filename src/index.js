@@ -85,3 +85,13 @@ ipcMain.on("open-directory", (event) => {
         }
    })
 })
+
+ipcMain.on("open-save-dialog", (event) => {
+    dialog.showSaveDialog(win, {
+        title: "Guardar imagen modificada",
+        buttonLabel: "Guardar imagen",
+        filters: []
+    }, (file =>{
+        console.log(file)
+    }))
+})
