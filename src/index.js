@@ -54,11 +54,11 @@ app.on("ready", () =>{
 })
 
 ipcMain.on("open-directory", (event) => {
-    //se nesesita una validacion para windows 
+    //se nesesita una validacion para windows  
    dialog.showOpenDialog(win, {
        title: "Seleccione la nueva ubiacacion",
         buttonLabel: "abrir Ubicacion",
-        properties: ["openDerectory"]
+        properties: ["openDirectory"]
    }, (dir) => {
        console.log(dir)
    })
