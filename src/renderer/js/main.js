@@ -55,6 +55,8 @@ function changeImage (node) {
 
 }
 
+
+
 function searImagesEvent(){
     
     const searchBox = document.getElementById("search-box")
