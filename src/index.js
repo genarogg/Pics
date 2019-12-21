@@ -4,7 +4,9 @@
 import { app, BrowserWindow, ipcMain, dialog } from "electron";
 import devTools from "./devTools"
 import isImage from "is-image"
+import path from "path"
 import fs from "fs"
+import fileSize from "filesize"
 
 let win;
 
@@ -69,7 +71,10 @@ ipcMain.on("open-directory", (event) => {
             fs.readdir(dir[0], (err,files) => {
                 for(let i = 0, lengthl = files.length; i < lengthl; i++){
                     if(isImage(files[i])){
-                        images.push(files[i])
+                        let imageFile = path.join(dir[0], files[i])
+                        let stats = fs.statSync(imageFile)
+                        let size = fileSize(stats.size , { around: 0 })
+                        images.push({filename: files[i], src: `file://${imageFile}`, size: size })
                     }
                 }
                 console.log(images)
