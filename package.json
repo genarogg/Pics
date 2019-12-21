@@ -13,7 +13,8 @@
   "dependencies": {
     "cross-env": "^6.0.3",
     "electron-compile": "^6.4.4",
-    "electron-debug": "^3.0.1"
+    "electron-debug": "^3.0.1",
+    "filesize": "^6.0.1"
   },
   "devDependencies": {
     "devtron": "^1.4.0",
