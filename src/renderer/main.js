@@ -16,6 +16,3 @@ function buttonEvent(id, func){
 
     openDirectory.addEventListener("click", func)
 }
-
-
-

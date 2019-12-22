@@ -12,7 +12,12 @@ function setIpc(){
     })
 
     ipcRenderer.on("save-image", (event, file) =>{
-        saveImage(file)
+        saveImage(file, (err) => {
+            if(err){
+                return showDialog("error", "Pics", err.message)
+            }
+            showDialog("info", "Pics", "La imagen fue guardada")
+        })
     })
 }
 
@@ -21,6 +26,9 @@ function openDirectory(){
     ipcRenderer.send("open-directory")
 }
 
+function showDialog(type, title, msg){
+    ipcRenderer.send("show-dialog", {type: type, title: title, message: msg})
+}
 function saveFile(){
     const image = document.getElementById("image-displayed").dataset.original
     console.log(image)
