@@ -1,3 +1,5 @@
+import fs from "fs"
+
 function applyFilter ( filter, currentImage){
     
     let imgObj = new Image()
@@ -8,4 +10,17 @@ function applyFilter ( filter, currentImage){
                 .renderHtml(currentImage)
 }
 
-module.exports = applyFilter
+function saveImage(fileName){
+    let fileSrc = document.getElementById("image-displayed").src
+
+    fileSrc = fileSrc.replace(/^data:([A-Za-z-+/]+);base64,/, ' ')
+    
+    fs.writeFile(fileName, fileSrc, 'base64', (err) =>{
+        if(err) console.log(err)
+    })
+}
+
+module.exports = {
+    applyFilter: applyFilter,
+    saveImage: saveImage
+}
