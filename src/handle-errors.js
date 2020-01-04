@@ -24,7 +24,9 @@ function setupErrors (win) {
 
     })
 
-    
+    process.on("uncaughtException", () => {
+        relaunchApp(win)
+    })
 }
 
 module.exports = setupErrors
