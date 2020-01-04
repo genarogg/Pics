@@ -14,6 +14,17 @@ function setupErrors (win) {
     win.webContents.on("crashed", () => {
         relaunchApp(win)
     })
+
+    win.on("unresponsive", () => {
+        dialog.showMessageBox(win, {
+            type: "warning",
+            title: "Platzipics",
+            message: "Un proceso está tardando demasiado, puede esperar o reinicar la aplicacion"
+        })
+
+    })
+
+    
 }
 
 module.exports = setupErrors
