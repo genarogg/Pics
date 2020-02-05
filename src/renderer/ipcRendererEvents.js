@@ -39,7 +39,7 @@ function openPreferences() {
     title: "Preferencias",
     center: true,
     modal: true,
-    frame: false,
+    frame: true,
     show: false
   });
   preferencesWindow.show();
@@ -62,5 +62,6 @@ function saveFile() {
 module.exports = {
   setIpc: setIpc,
   saveFile: saveFile,
-  openDirectory: openDirectory
+  openDirectory: openDirectory,
+  openPreferences: openPreferences
 };
