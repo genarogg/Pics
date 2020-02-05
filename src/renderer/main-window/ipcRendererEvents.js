@@ -20,6 +20,7 @@ function setIpc() {
     addImagesEvents();
     selectFirsImage();
     settings.set("directory", dir)
+    document.getElementById("directory").innerHTML = dir
   });
 
   ipcRenderer.on("save-image", (event, file) => {
