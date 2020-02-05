@@ -39,7 +39,7 @@ function openPreferences() {
     title: "Preferencias",
     center: true,
     modal: true,
-    frame: true,
+    frame: false,
     show: false
   });
   preferencesWindow.show();
