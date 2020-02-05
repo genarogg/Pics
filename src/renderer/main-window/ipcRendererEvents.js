@@ -5,16 +5,18 @@ import {
   loadImages,
   selectFirsImage
 } from "./images-iu";
+import settings from "electron-settings"
 import { saveImage } from "./filters";
 import path from "path";
 import os from "os"
 
 function setIpc() {
-  ipcRenderer.on("load-images", (event, images) => {
+  ipcRenderer.on("load-images", (event,dir, images) => {
     clearImages();
     loadImages(images);
     addImagesEvents();
     selectFirsImage();
+    settings.set("directory", dir)
   });
 
   ipcRenderer.on("save-image", (event, file) => {

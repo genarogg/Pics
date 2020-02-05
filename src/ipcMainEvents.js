@@ -33,7 +33,7 @@ function setMainIpc(win) {
                 });
               }
             }
-            event.sender.send("load-images", images);
+            event.sender.send("load-images",dir[0], images);
           });
         }
       }
