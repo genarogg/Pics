@@ -8,31 +8,44 @@
     <link rel="stylesheet" href="../assets/css/style.css" />
   </head>
   <body>
-    <div class="window-content">
-      <div class="padden-more">
-        <form action="" id="preferences-form">
-          <div class="form-group">
-            <label for="">Usuario de CloudUP</label>
-            <input type="email" class="form-control" placeholder="Email" />
-          </div>
-          }
-          <div class="form-group">
-            <label for="">Password de CloudUP</label>
-            <input
-              type="password"
-              placeholder="Password"
-              class="form-control"
-            />
-          </div>
-        </form>
+    <div class="window">
+      <header class="toolbar toolbar-header">
+        <h1 class="title">Preferencias</h1>
+      </header>
+
+      <div class="window-content">
+        <div class="padded-more">
+          <form action="" id="preferences-form">
+            <div class="form-group">
+              <label for="">Usuario de CloudUP</label>
+              <input type="email" class="form-control" placeholder="Email" />
+            </div>
+
+            <div class="form-group">
+              <label for="">Password de CloudUP</label>
+              <input
+                type="password"
+                placeholder="Password"
+                class="form-control"
+              />
+            </div>
+          </form>
+        </div>
       </div>
+      <footer class="toolbar toolbar-footer">
+        <div class="toolbar-actions">
+          <button id="cancel-button" class="btn btn-default">Cancelar</button>
+          <button
+            id="save-button"
+            class="btn btn-primary pull-right"
+            type="submit"
+            form="preferences-form"
+          >
+            Guardar
+          </button>
+        </div>
+      </footer>
     </div>
-    <footer class="toolbar toolbar-footer">
-      <div class="toolbar-actions">
-        <button id="cancel-button" class="btn btn-default">Cancelar</button>
-        <button id="save-button" class="btn btn-primary pull-right" type="submit" form="preferences-form">Guardar</button>
-      </div>
-    </footer>
     <script
       src="prefs-window/prefs-frontend.js"
       type="text/javascript"

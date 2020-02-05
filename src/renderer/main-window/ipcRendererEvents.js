@@ -7,6 +7,7 @@ import {
 } from "./images-iu";
 import { saveImage } from "./filters";
 import path from "path";
+import os from "os"
 
 function setIpc() {
   ipcRenderer.on("load-images", (event, images) => {
@@ -32,6 +33,7 @@ function setIpc() {
 
 function openPreferences() {
   const BrowserWindow = remote.BrowserWindow;
+  const mainWindow = remote.getGlobal("win")
 
   const preferencesWindow = new BrowserWindow({
     width: 400,
@@ -42,7 +44,17 @@ function openPreferences() {
     frame: false,
     show: false
   });
-  preferencesWindow.show();
+
+  if(os.platform() !== "win32" ){
+    preferencesWindow.setParentWindow(mainWindow)
+  }
+  /*  */
+  preferencesWindow.once("ready-to-show", () => {
+    preferencesWindow.show();
+    preferencesWindow.focus();
+  })
+  
+  preferencesWindow.loadURL(`file://${path.join(__dirname, "..")}/preferences.html`)
 }
 function openDirectory() {
   ipcRenderer.send("open-directory");

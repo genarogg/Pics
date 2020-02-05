@@ -7,7 +7,7 @@ import setIpcMain from "./ipcMainEvents"
 import handleErrors from "./handle-errors";
 
 
-let win;
+global.global.win;
 
 if (process.env.NODE_ENV === "development") {
   devTools();
@@ -22,7 +22,7 @@ app.on("before-quit", () => {
 app.on("ready", () => {
 
   /* Crea la ventana */
-  win = new BrowserWindow({
+  global.win = new BrowserWindow({
     /* Propiedades de la ventana */
     width: 1500,
     height: 800,
@@ -31,29 +31,29 @@ app.on("ready", () => {
     /* maximizable: false, */
     show: false
   });
-  setIpcMain(win)
-  handleErrors(win);
+  setIpcMain(global.global.win)
+  handleErrors(global.global.win);
 
-  win.once("ready-to-show", () => {
-    win.show();
+  global.global.win.once("ready-to-show", () => {
+    global.global.win.show();
   });
 
   /*  get position of the windows */
-  win.on("move", () => {
-    const position = win.getPosition();
+  global.win.on("move", () => {
+    const position = global.win.getPosition();
     /* console.log(`la posicion es ${position}`) */
   });
 
   /* Detecta el cierre de la ventana para cerrar el aplicativo */
-  win.on("closed", () => {
-    (win = null), app.quit();
+  global.win.on("closed", () => {
+    (global.win = null), app.quit();
   });
 
   /* Elimina la barra de menu */
-  win.setMenu(null);
+  global.win.setMenu(null);
 
   /* Peticiones a un servidor */
-  win.loadURL(`file://${__dirname}/renderer/index.html`);
-  win.toggleDevTools();
+  global.win.loadURL(`file://${__dirname}/renderer/index.html`);
+  global.win.toggleDevTools();
 });
 
