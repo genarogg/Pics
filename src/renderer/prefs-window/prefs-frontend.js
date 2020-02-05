@@ -1,8 +1,10 @@
 import {remote} from "electron"
+import settings from "electron-settings"
 
 
 window.addEventListener("load", () => {
     cancelButton()
+    saveButton ()
 })
 
 function cancelButton () {
@@ -10,5 +12,19 @@ function cancelButton () {
     cancelButton.addEventListener("click", () => {
         const prefsWindow = remote.getCurrentWindow()
         prefsWindow.close()
+    })
+}
+
+function saveButton () {
+    const saveButton = document.getElementById("save-button")
+    const prefsForm = document.getElementById("preferences-form")
+    saveButton.addEventListener("click", () => {
+        if(prefsForm.reportValidity()){
+            settings.set("cloudup.user", document.getElementById("cloudup-user").value)
+            settings.set("cloudup.user", document.getElementById("cloudup-passwd").value)
+            const prefsWindow = remote.getCurrentWindow()
+            prefsWindow.close()
+        }
+        
     })
 }
