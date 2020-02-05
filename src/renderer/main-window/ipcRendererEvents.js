@@ -11,6 +11,9 @@ import path from "path";
 import os from "os"
 
 function setIpc() {
+  if(settings.has("directory")){
+    ipcRenderer.send("load-directory", settings.has("directory"))
+  } 
   ipcRenderer.on("load-images", (event,dir, images) => {
     clearImages();
     loadImages(images);

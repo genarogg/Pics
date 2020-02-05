@@ -15,30 +15,15 @@ function setMainIpc(win) {
         properties: ["openDirectory"]
       },
       dir => {
-        const images = [];
-
         if (dir) {
-          fs.readdir(dir[0], (err, files) => {
-            if (err) throw err;
-
-            for (let i = 0, lengthl = files.length; i < lengthl; i++) {
-              if (isImage(files[i])) {
-                let imageFile = path.join(dir[0], files[i]);
-                let stats = fs.statSync(imageFile);
-                let size = fileSize(stats.size, { around: 0 });
-                images.push({
-                  filename: files[i],
-                  src: `file://${imageFile}`,
-                  size: size
-                });
-              }
-            }
-            event.sender.send("load-images",dir[0], images);
-          });
+          loadImages(event, dir[0])
         }
       }
     );
   });
+  ipcMain.on("load-directory", (event, dir) =>{
+    loadImages(event,dir)
+  })
 
   ipcMain.on("open-save-dialog", (event, ext) => {
     dialog.showSaveDialog(
@@ -62,6 +47,27 @@ function setMainIpc(win) {
       title: info.title,
       message: info.message
     });
+  });
+}
+
+function loadImages(event , dir) {
+  const images = [];
+  fs.readdir(dir, (err, files) => {
+    if (err) throw err;
+
+    for (let i = 0, lengthl = files.length; i < lengthl; i++) {
+      if (isImage(files[i])) {
+        let imageFile = path.join(dir, files[i]);
+        let stats = fs.statSync(imageFile);
+        let size = fileSize(stats.size, { around: 0 });
+        images.push({
+          filename: files[i],
+          src: `file://${imageFile}`,
+          size: size
+        });
+      }
+    }
+    event.sender.send("load-images", dir, images);
   });
 }
 
