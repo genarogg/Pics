@@ -12,7 +12,7 @@ import os from "os"
 
 function setIpc() {
   if(settings.has("directory")){
-    ipcRenderer.send("load-directory", settings.has("directory"))
+    ipcRenderer.send("load-directory", settings.get("directory"))
   } 
   ipcRenderer.on("load-images", (event,dir, images) => {
     clearImages();
