@@ -1,4 +1,4 @@
-import {remote} from "electron"
+import {remote, ipcRenderer} from "electron"
 import settings from "electron-settings"
 
 
@@ -24,6 +24,9 @@ function saveButton () {
             settings.set("cloudup.user", document.getElementById("cloudup-passwd").value)
             const prefsWindow = remote.getCurrentWindow()
             prefsWindow.close()
+        }
+        else{
+            ipcRenderer.send("show-dialog", { type: "error", title: "Pics | Genarogg", message: "Complete los campos requeridos." });
         }
         
     })
