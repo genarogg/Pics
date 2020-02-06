@@ -1,11 +1,25 @@
 import {remote, ipcRenderer} from "electron"
 import settings from "electron-settings"
+import crypto from "crypto"
 
 
 window.addEventListener("load", () => {
     cancelButton()
     saveButton ()
+
+    if(settings.has("cloudup.user")){
+        document.getElementById("cloudup-user").value = settings.get("cloudup.user")
+    }
+
+    if(settings.has("cloudup.passwd")){
+        const decipher = crypto.createDecipher("aes192", "Platzipics")
+        let decryted = decipher.update(settings.get("cloudup.user"), "hex", "utf8")
+        decryted += decipher.final("utf8")
+        document.getElementById("cloudup-passwd").value = decryted
+    }
 })
+
+
 
 function cancelButton () {
     const cancelButton = document.getElementById("cancel-button")
@@ -20,8 +34,12 @@ function saveButton () {
     const prefsForm = document.getElementById("preferences-form")
     saveButton.addEventListener("click", () => {
         if(prefsForm.reportValidity()){
+            const cipher = crypto.createCipher("aes192", "Platzipics")
+            let encryted = cipher.update(document.getElementById("cloudup-passwd").value)
+            encryted += cipher.final("hex")
+
             settings.set("cloudup.user", document.getElementById("cloudup-user").value)
-            settings.set("cloudup.user", document.getElementById("cloudup-passwd").value)
+            settings.set("cloudup.passwd", encrypted)
             const prefsWindow = remote.getCurrentWindow()
             prefsWindow.close()
         }
