@@ -14,12 +14,12 @@ function saveImage(fileName, callback) {
   let fileSrc = document.getElementById("image-displayed").src;
 
   if (fileSrc.indexOf(";base64,") !== -1) {
-    fileSrc = fileSrc.replace(/^data:([A-Za-z-+/]+);base64,/, " ");
+    fileSrc = fileSrc.replace(/^data:([A-Za-z-+/]+);base64,/, "");
     fse.writeFile(fileName, fileSrc, "base64", callback);
   } 
   
   else {
-    //Error Critico
+    //Error Critico video: 27
     fileSrc = fileSrc.replace("file://", "");
     console.log(fileSrc)
 
