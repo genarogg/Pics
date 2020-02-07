@@ -29,7 +29,7 @@ function setIpc() {
         return showDialog(
           /* "error" */ "info",
           "Pics",
-          /*  err.message */ "hey! no has editado la img, no hagas replicas =]"
+          /*  err.message */ "hey! no has hecho cambios a la img, no hagas replicas."
         );
       }
       showDialog("info", "Pics", "La imagen fue guardada");

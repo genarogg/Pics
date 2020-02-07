@@ -5,17 +5,17 @@ import crypto from "crypto"
 
 window.addEventListener("load", () => {
     cancelButton()
-    saveButton ()
+    saveButton()
 
     if(settings.has("cloudup.user")){
         document.getElementById("cloudup-user").value = settings.get("cloudup.user")
     }
 
     if(settings.has("cloudup.passwd")){
-        const decipher = crypto.createDecipher("aes192", "Platzipics")
-        let decryted = decipher.update(settings.get("cloudup.user"), "hex", "utf8")
-        decryted += decipher.final("utf8")
-        document.getElementById("cloudup-passwd").value = decryted
+        /* const decipher = crypto.createDecipher("aes192", "Platzipics")
+        let decrypted = decipher.update(settings.get("cloudup.user"), "hex", "utf8")
+        decrypted += decipher.final("utf8")
+        document.getElementById("cloudup-passwd").value = decrypted */
     }
 })
 
@@ -32,6 +32,7 @@ function cancelButton () {
 function saveButton () {
     const saveButton = document.getElementById("save-button")
     const prefsForm = document.getElementById("preferences-form")
+    
     saveButton.addEventListener("click", () => {
         if(prefsForm.reportValidity()){
             const cipher = crypto.createCipher("aes192", "Platzipics")
