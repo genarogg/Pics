@@ -1,33 +1,27 @@
-import fse from "fs-extra";
+import fs from 'fs-extra'
 
-function applyFilter(filter, currentImage) {
-  let imgObj = new Image();
-  imgObj.src = currentImage.src; //eslint-disable-line
+function applyFilter (filter, currentImage) {
+  let imgObj = new Image() // eslint-disable-line
+  imgObj.src = currentImage.src
 
-  filterous
-    .importImage(imgObj, {}) //eslint-disable-line
+  filterous.importImage(imgObj, {}) // eslint-disable-line
     .applyInstaFilter(filter)
-    .renderHtml(currentImage);
+    .renderHtml(currentImage)
 }
 
-function saveImage(fileName, callback) {
-  let fileSrc = document.getElementById("image-displayed").src;
+function saveImage (fileName, callback) {
+  let fileSrc = document.getElementById('image-displayed').src
 
-  if (fileSrc.indexOf(";base64,") !== -1) {
-    fileSrc = fileSrc.replace(/^data:([A-Za-z-+/]+);base64,/, "");
-    fse.writeFile(fileName, fileSrc, "base64", callback);
-  } 
-  
-  else {
-    //Error Critico video: 27
-    fileSrc = fileSrc.replace("file://", "");
-    console.log(fileSrc)
-
-    fse.copy(fileSrc, fileName, callback);
+  if (fileSrc.indexOf(';base64,') !== -1) {
+    fileSrc = fileSrc.replace(/^data:([A-Za-z-+/]+);base64,/, '')
+    fs.writeFile(fileName, fileSrc, 'base64', callback)
+  } else {
+    fileSrc = fileSrc.replace('file://', '')
+    fs.copy(fileSrc, fileName, callback)
   }
 }
 
 module.exports = {
   applyFilter: applyFilter,
   saveImage: saveImage
-};
+}

@@ -1,80 +1,72 @@
-import { ipcRenderer, remote } from "electron";
-import {
-  addImagesEvents,
-  clearImages,
-  loadImages,
-  selectFirsImage
-} from "./images-iu";
-import settings from "electron-settings"
-import { saveImage } from "./filters";
-import path from "path";
-import os from "os"
+import { ipcRenderer, remote } from 'electron'
+import settings from 'electron-settings'
+import { addImagesEvents, clearImages, loadImages, selectFisrtImage } from './images-ui'
+import { saveImage } from './filters'
+import path from 'path'
+import os from 'os'
 
-function setIpc() {
-  if(settings.has("directory")){
-    ipcRenderer.send("load-directory", settings.get("directory"))
-  } 
-  ipcRenderer.on("load-images", (event,dir, images) => {
-    clearImages();
-    loadImages(images);
-    addImagesEvents();
-    selectFirsImage();
-    settings.set("directory", dir)
-    document.getElementById("directory").innerHTML = dir
-  });
+function setIpc () {
+  if (settings.has('directory')) {
+    ipcRenderer.send('load-directory', settings.get('directory'))
+  }
 
-  ipcRenderer.on("save-image", (event, file) => {
-    saveImage(file, err => {
-      if (err) {
-        return showDialog(
-          /* "error" */ "info",
-          "Pics",
-          /*  err.message */ "hey! no has hecho cambios a la img, no hagas replicas."
-        );
-      }
-      showDialog("info", "Pics", "La imagen fue guardada");
-    });
-  });
+  ipcRenderer.on('load-images', (event, dir, images) => {
+    clearImages()
+    loadImages(images)
+    addImagesEvents()
+    selectFisrtImage()
+    settings.set('directory', dir)
+    document.getElementById('directory').innerHTML = dir
+  })
+
+  ipcRenderer.on('save-image', (event, file) => {
+    saveImage(file, (err) => {
+      if (err) return showDialog('error', 'Platzipics', err.message)
+
+      showDialog('info', 'Platzipics', 'La imagen fue guardada')
+    })
+  })
 }
 
-function openPreferences() {
-  const BrowserWindow = remote.BrowserWindow;
-  const mainWindow = remote.getGlobal("win")
+function openPreferences () {
+  const BrowserWindow = remote.BrowserWindow
+  const mainWindow = remote.getGlobal('win')
 
   const preferencesWindow = new BrowserWindow({
     width: 400,
     height: 300,
-    title: "Preferencias",
+    title: 'Preferencias',
     center: true,
     modal: true,
     frame: false,
     show: false
-  });
+  })
 
-  if(os.platform() !== "win32" ){
+  if (os.platform() !== 'win32') {
     preferencesWindow.setParentWindow(mainWindow)
   }
-  /*  */
-  preferencesWindow.once("ready-to-show", () => {
-    preferencesWindow.show();
-    preferencesWindow.focus();
+
+  preferencesWindow.once('ready-to-show', () => {
+    preferencesWindow.show()
+    preferencesWindow.focus()
   })
-  
-  preferencesWindow.loadURL(`file://${path.join(__dirname, "..")}/preferences.html`)
-}
-function openDirectory() {
-  ipcRenderer.send("open-directory");
+
+  preferencesWindow.loadURL(`file://${path.join(__dirname, '..')}/preferences.html`)
 }
 
-function showDialog(type, title, msg) {
-  ipcRenderer.send("show-dialog", { type: type, title: title, message: msg });
+function openDirectory () {
+  ipcRenderer.send('open-directory')
 }
-function saveFile() {
-  //Extecion de la img
-  const image = document.getElementById("image-displayed").dataset.original;
-  console.log(image);
-  const ext = path.extname(image);
-  ipcRenderer.send("open-save-dialog", ext);
+
+function showDialog (type, title, msg) {
+  ipcRenderer.send('show-dialog', {type: type, title: title, message: msg})
+}
+
+function saveFile () {
+  const image = document.getElementById('image-displayed').dataset.original
+  const ext = path.extname(image)
+
+  ipcRenderer.send('open-save-dialog', ext)
 }
 
 module.exports = {
@@ -82,4 +74,4 @@ module.exports = {
   saveFile: saveFile,
   openDirectory: openDirectory,
   openPreferences: openPreferences
-};
+}

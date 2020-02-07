@@ -1,59 +1,54 @@
-"use strict";
+'use strict'
 
-/* Instanciado los objetos app y BrowserWindow */
-import { app, BrowserWindow } from "electron";
-import devTools from "./devTools";
-import setIpcMain from "./ipcMainEvents"
-import handleErrors from "./handle-errors";
+// instanciando los objetos app y BrowserWindow
+import { app, BrowserWindow } from 'electron'
+import devtools from './devtools'
+import setIpcMain from './ipcMainEvents'
+import handleErrors from './handle-errors'
 
+global.win // eslint-disable-line
 
-global.global.win;
-
-if (process.env.NODE_ENV === "development") {
-  devTools();
+if (process.env.NODE_ENV === 'development') {
+  devtools()
 }
 
-/* Imprimiendo un mensaje en la consola antes de salir */
-app.on("before-quit", () => {
-  console.log("Saliendo...");
-});
+// imprimiendo un mensaje en la consola antes de salir
+app.on('before-quit', () => {
+  console.log('Saliendo..')
+})
 
-/* Ejecutando ordenes cuando la app esta lista */
-app.on("ready", () => {
-
-  /* Crea la ventana */
+// Ejecutando ordenes cuando la aplicación esta lista
+app.on('ready', () => {
+  // creando una ventana
   global.win = new BrowserWindow({
-    /* Propiedades de la ventana */
-    width: 1500,
-    height: 800,
-    title: "Hola Mundo",
+    width: 800,
+    height: 600,
+    title: 'Hola Mundo!',
     center: true,
-    /* maximizable: false, */
+    maximizable: false,
     show: false
-  });
-  setIpcMain(global.global.win)
-  handleErrors(global.global.win);
+  })
 
-  global.global.win.once("ready-to-show", () => {
-    global.global.win.show();
-  });
+  setIpcMain(global.win)
+  handleErrors(global.win)
 
-  /*  get position of the windows */
-  global.win.on("move", () => {
-    const position = global.win.getPosition();
-    /* console.log(`la posicion es ${position}`) */
-  });
+  // Mostrando la ventana solo cuando el contenido a mostrar sea cargado
+  global.win.once('ready-to-show', () => {
+    global.win.show()
+  })
 
-  /* Detecta el cierre de la ventana para cerrar el aplicativo */
-  global.win.on("closed", () => {
-    (global.win = null), app.quit();
-  });
+  // Escuchando el evento cuando la ventana es movida
+  global.win.on('move', () => {
+    const position = global.win.getPosition()
+    console.log(`la posición es ${position}`)
+  })
 
-  /* Elimina la barra de menu */
-  global.win.setMenu(null);
+  // detectando el cierre de la ventana para cerrar el aplicativo
+  global.win.on('closed', () => {
+    global.win = null
+    app.quit()
+  })
 
-  /* Peticiones a un servidor */
-  global.win.loadURL(`file://${__dirname}/renderer/index.html`);
-  global.win.toggleDevTools();
-});
-
+  // Carga una url desde el folder renderer
+  global.win.loadURL(`file://${__dirname}/renderer/index.html`)
+})
