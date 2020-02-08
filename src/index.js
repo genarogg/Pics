@@ -1,54 +1,70 @@
-'use strict'
+"use strict";
 
 // instanciando los objetos app y BrowserWindow
-import { app, BrowserWindow } from 'electron'
-import devtools from './devtools'
-import setIpcMain from './ipcMainEvents'
-import handleErrors from './handle-errors'
+import { app, BrowserWindow, Tray } from "electron";
+import devtools from "./devtools";
+import setIpcMain from "./ipcMainEvents";
+import handleErrors from "./handle-errors";
+import os from "os";
+import path from "path";
 
-global.win // eslint-disable-line
+global.win; // eslint-disable-line
+global.tray; // eslint-disable-line
 
-if (process.env.NODE_ENV === 'development') {
-  devtools()
+if (process.env.NODE_ENV === "development") {
+  devtools();
 }
 
 // imprimiendo un mensaje en la consola antes de salir
-app.on('before-quit', () => {
-  console.log('Saliendo..')
-})
+app.on("before-quit", () => {
+  console.log("Saliendo..");
+});
 
 // Ejecutando ordenes cuando la aplicación esta lista
-app.on('ready', () => {
+app.on("ready", () => {
   // creando una ventana
   global.win = new BrowserWindow({
     width: 800,
     height: 600,
-    title: 'Hola Mundo!',
+    title: "Hola Mundo!",
     center: true,
     maximizable: false,
     show: false
-  })
+  });
 
-  setIpcMain(global.win)
-  handleErrors(global.win)
+  setIpcMain(global.win);
+  handleErrors(global.win);
 
   // Mostrando la ventana solo cuando el contenido a mostrar sea cargado
-  global.win.once('ready-to-show', () => {
-    global.win.show()
-  })
+  global.win.once("ready-to-show", () => {
+    global.win.show();
+  });
 
   // Escuchando el evento cuando la ventana es movida
-  global.win.on('move', () => {
-    const position = global.win.getPosition()
-    console.log(`la posición es ${position}`)
-  })
+  global.win.on("move", () => {
+    const position = global.win.getPosition();
+    console.log(`la posición es ${position}`);
+  });
 
   // detectando el cierre de la ventana para cerrar el aplicativo
-  global.win.on('closed', () => {
-    global.win = null
-    app.quit()
-  })
+  global.win.on("closed", () => {
+    global.win = null;
+    app.quit();
+  });
 
+  let ico;
+
+  if (os.platform() === win32) {
+    icon = path.join(__dirname, "assets", "icons", "tray-icon.ico");
+  } else {
+    icon = path.join(__dirname, "assets", "icons", "tray-icon.png");
+  }
+
+  global.tray = new Tray(icon);
+  global.tray.setToolTip("Platzipics");
+  global.tray.on("click", () => {
+    global.win.isVisible() ? global.win.hide() : global.win.show()
+  })
   // Carga una url desde el folder renderer
-  global.win.loadURL(`file://${__dirname}/renderer/index.html`)
-})
+  global.win.loadURL(`file://${__dirname}/renderer/index.html`);
+});
