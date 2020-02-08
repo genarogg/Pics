@@ -52,9 +52,9 @@ app.on("ready", () => {
     app.quit();
   });
 
-  let ico;
+  let icon;
 
-  if (os.platform() === win32) {
+  if (os.platform() === "win32") {
     icon = path.join(__dirname, "assets", "icons", "tray-icon.ico");
   } else {
     icon = path.join(__dirname, "assets", "icons", "tray-icon.png");
