@@ -83,7 +83,11 @@ function uploadImage() {
   image = image.replace("file://")
   let fileName = path.basename(image)
 
-   
+   if(settings.has("cloudup.user") && settings.has("cloudup.passwd")){
+    
+   } else {
+     showDialog("error", "Platzi", "Por favor complete las preferencias de cloudup.")
+   }
 }
 
 module.exports = {
