@@ -27,6 +27,26 @@ function createMenu () {
           role: 'quit'
         }
       ]
+    },
+    {
+      label: 'Edición',
+      submenu: [
+        {
+          label: 'Imprimir',
+          accelerator: 'CmdOrCtrl+P',
+          click () { print() }
+        },
+        {
+          label: 'Subir a Cloudup',
+          accelerator: 'CmdOrCtrl+U',
+          click () { uploadImage() }
+        },
+        {
+          label: 'Pegar imagen',
+          accelerator: 'CmdOrCtrl+V',
+          click () { pasteImage() }
+        }
+      ]
     }
   ]
   const menu = remote.Menu.buildFromTemplate(template)
