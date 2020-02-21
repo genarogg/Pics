@@ -1,4 +1,4 @@
-import { ipcRenderer, remote } from "electron";
+import { ipcRenderer, clipboard, remote } from "electron";
 import settings from "electron-settings";
 import {
   addImagesEvents,
@@ -30,7 +30,7 @@ function setIpc() {
     saveImage(file, err => {
       if (err) return showDialog("error", "Platzipics", err.message);
 
-      document.getElementById("image-displayed").dataset.filtered = file
+      document.getElementById("image-displayed").dataset.filtered = file;
       showDialog("info", "Platzipics", "La imagen fue guardada");
     });
   });
@@ -79,59 +79,87 @@ function saveFile() {
   ipcRenderer.send("open-save-dialog", ext);
 }
 
-function uploadImage () {
-  let imageNode = document.getElementById('image-displayed')
-  let image
+function uploadImage() {
+  let imageNode = document.getElementById("image-displayed");
+  let image;
   if (imageNode.dataset.filtered) {
-    image = imageNode.dataset.filtered
+    image = imageNode.dataset.filtered;
   } else {
-    image = imageNode.src
+    image = imageNode.src;
   }
 
-  image = image.replace('plp://', '')
-  let fileName = path.basename(image)
+  image = image.replace("plp://", "");
+  let fileName = path.basename(image);
 
-  if (settings.has('cloudup.user') && settings.has('cloudup.passwd')) {
-    document.getElementById('overlay').classList.toggle('hidden')
+  if (settings.has("cloudup.user") && settings.has("cloudup.passwd")) {
+    document.getElementById("overlay").classList.toggle("hidden");
 
-    const decipher = crypto.createDecipher('aes192', 'Platzipics')
-    let decrypted = decipher.update(settings.get('cloudup.passwd'), 'hex', 'utf8')
-    decrypted += decipher.final('utf8')
+    const decipher = crypto.createDecipher("aes192", "Platzipics");
+    let decrypted = decipher.update(
+      settings.get("cloudup.passwd"),
+      "hex",
+      "utf8"
+    );
+    decrypted += decipher.final("utf8");
 
     const client = Cloudup({
-      user: settings.get('cloudup.user'),
+      user: settings.get("cloudup.user"),
       pass: decrypted
-    })
+    });
 
-    const stream = client.stream({ title: `Platzipics - ${fileName}` })
-    stream.file(image).save((err) => {
-      document.getElementById('overlay').classList.toggle('hidden')
+    const stream = client.stream({ title: `Platzipics - ${fileName}` });
+    stream.file(image).save(err => {
+      document.getElementById("overlay").classList.toggle("hidden");
       if (err) {
-        showDialog('error', 'Platzipics', 'Verifique su conexión y/o sus credenciales de Cloudup')
+        showDialog(
+          "error",
+          "Platzipics",
+          "Verifique su conexión y/o sus credenciales de Cloudup"
+        );
       } else {
-        clipboard.writeText(stream.url)
-        const notify = new Notification('Platzipics', { //eslint-disable-line
-          body: `Imagen cargada con éxito - ${stream.url}, el enlace se copio al portapeles ` +
-                `De click para abrir la url`,
+        clipboard.writeText(stream.url);
+        const notify = new Notification("Platzipics", {
+          //eslint-disable-line
+          body:
+            `Imagen cargada con éxito - ${stream.url}, el enlace se copio al portapeles ` +
+            `De click para abrir la url`,
           silent: false
-        })
+        });
 
         notify.onclick = () => {
-          shell.openExternal(stream.url)
-        }
+          shell.openExternal(stream.url);
+        };
       }
-    })
+    });
   } else {
-    showDialog('error', 'Platzipics', 'Por favor complete las preferencias de Cloudup')
+    showDialog(
+      "error",
+      "Platzipics",
+      "Por favor complete las preferencias de Cloudup"
+    );
   }
 }
-
+function pasteImage() {
+  const image = clipboard.readImage();
+  const data = image.toDataURL();
+  if (data.indexOf("data:image/png;base64") !== -1 && !image.isEmpty()) {
+    let mainImage = document.getElementById("image-displayed");
+    mainImage.src = data;
+    mainImage.dataset.original = data;
+  } else {
+    showDialog(
+      "error",
+      "Platzipics",
+      "No hay una imagen valida en el portapapeles"
+    );
+  }
+}
 
 module.exports = {
   setIpc: setIpc,
   saveFile: saveFile,
   openDirectory: openDirectory,
   openPreferences: openPreferences,
-  uploadImage: uploadImage
-
+  uploadImage: uploadImage,
+  pasteImage: pasteImage
 };
