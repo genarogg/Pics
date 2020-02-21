@@ -7,8 +7,8 @@ import {
   selectFisrtImage
 } from "./images-ui";
 import { saveImage } from "./filters";
-import settings from "electron-settings"
-import client from "cloudup-client";
+import Cloudup from "cloudup-client";
+import crypto from "crypto";
 import path from "path";
 import os from "os";
 
@@ -80,19 +80,55 @@ function saveFile() {
 
 function uploadImage() {
   let image = document.getElementById("image-displayed").src;
-  image = image.replace("file://")
-  let fileName = path.basename(image)
+  image = image.replace("file://");
+  let fileName = path.basename(image);
 
-   if(settings.has("cloudup.user") && settings.has("cloudup.passwd")){
-    
-   } else {
-     showDialog("error", "Platzi", "Por favor complete las preferencias de cloudup.")
-   }
+  if (settings.has("cloudup.user") && settings.has("cloudup.passwd")) {
+    const decipher = crypto.createDecipher("aes192", "Platzipics");
+    let decrypted = decipher.update(
+      settings.get("cloudup.passwd"),
+      "hex",
+      "utf8"
+    );
+    decrypted += decipher.final("utf8");
+
+    const client = Cloudup({
+      user: settings.get("cloudup.user"),
+      pass: decrypted
+    });
+
+    const stream = client.stream({ title: `Platzipics - ${fileName}` });
+    stream.file(image).save((error) =>{
+      if(error){
+        showDialog(
+          "error",
+          "Platzi",
+          "Verifique su coneccion o credenciales"
+        ); 
+      }
+
+        else{
+          showDialog(
+            "error",
+            "Platzi",
+            `Imagen cargada con exito - ${stream.url}`
+          );
+        }
+    })
+  } else {
+    showDialog(
+      "error",
+      "Platzi",
+      "Por favor complete las preferencias de cloudup."
+    );
+  }
 }
 
 module.exports = {
   setIpc: setIpc,
   saveFile: saveFile,
   openDirectory: openDirectory,
-  openPreferences: openPreferences
+  openPreferences: openPreferences,
+  uploadImage: uploadImage
+
 };
