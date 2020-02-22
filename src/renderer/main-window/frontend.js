@@ -2,6 +2,7 @@ import { setIpc, openDirectory, saveFile, openPreferences, uploadImage, pasteIma
 import { addImagesEvents, searchImagesEvent, selectEvent, print} from './main-window/images-ui'
 
 window.addEventListener('load', () => {
+  createMenu()
   setIpc()
   addImagesEvents()
   searchImagesEvent()
