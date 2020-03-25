@@ -1,83 +1,90 @@
-'use strict'
+"use strict";
 
 // instanciando los objetos app y BrowserWindow
-import { app, BrowserWindow, Tray, globalShortcut, protocol } from 'electron'
-import devtools from './devtools'
-import setIpcMain from './ipcMainEvents'
-import handleErrors from './handle-errors'
-import os from 'os'
-import path from 'path'
+import { app, BrowserWindow, Tray, globalShortcut, protocol } from "electron";
+import devtools from "./devtools";
+import setIpcMain from "./ipcMainEvents";
+import handleErrors from "./handle-errors";
+import os from "os";
+import path from "path";
 
-global.win // eslint-disable-line
-global.tray // eslint-disable-line
+global.win; // eslint-disable-line
+global.tray; // eslint-disable-line
 
-if (process.env.NODE_ENV === 'development') {
-  devtools()
+if (process.env.NODE_ENV === "development") {
+  devtools();
 }
 
 // imprimiendo un mensaje en la consola antes de salir
-app.on('before-quit', () => {
-  globalShortcut.unregisterAll()
-})
+app.on("before-quit", () => {
+  globalShortcut.unregisterAll();
+});
 
 // Ejecutando ordenes cuando la aplicación esta lista
-app.on('ready', () => {
-  protocol.registerFileProtocol('plp', (request, callback) => {
-    const url = request.url.substr(6)
-    callback({path: path.normalize(url)}) // eslint-disable-line
-  }, (err) => {
-    if (err) throw err
-  })
+app.on("ready", () => {
+  protocol.registerFileProtocol(
+    "plp",
+    (request, callback) => {
+      const url = request.url.substr(6);
+      callback({ path: path.normalize(url) }); // eslint-disable-line
+    },
+    err => {
+      if (err) throw err;
+    }
+  );
 
   // creando una ventana
   global.win = new BrowserWindow({
     width: 1000,
     height: 800,
-    title: 'Platzipics',
+    title: "Platzipics",
     center: true,
     maximizable: true,
     show: false,
-    icon: path.join(__dirname, 'assets', 'icons', 'main-icon.png')
-  })
+    icon: path.join(__dirname, "assets", "icons", "main-icon.png")
+  });
 
-  globalShortcut.register('CommandOrControl+Alt+p', () => {
-    global.win.show()
-    global.win.focus()
-  })
+  /* Elimina la barra de menu */
+  win.setMenu(null);
 
-  setIpcMain(global.win)
-  handleErrors(global.win)
+  globalShortcut.register("CommandOrControl+Alt+p", () => {
+    global.win.show();
+    global.win.focus();
+  });
+
+  setIpcMain(global.win);
+  handleErrors(global.win);
 
   // Mostrando la ventana solo cuando el contenido a mostrar sea cargado
-  global.win.once('ready-to-show', () => {
-    global.win.show()
-  })
+  global.win.once("ready-to-show", () => {
+    global.win.show();
+  });
 
   // Escuchando el evento cuando la ventana es movida
-  global.win.on('move', () => {
-    const position = global.win.getPosition()
-    console.log(`la posición es ${position}`)
-  })
+  global.win.on("move", () => {
+    const position = global.win.getPosition();
+    console.log(`la posición es ${position}`);
+  });
 
   // detectando el cierre de la ventana para cerrar el aplicativo
-  global.win.on('closed', () => {
-    global.win = null
-    app.quit()
-  })
+  global.win.on("closed", () => {
+    global.win = null;
+    app.quit();
+  });
 
-  let icon
-  if (os.platform() === 'win32') {
-    icon = path.join(__dirname, 'assets', 'icons', 'tray-icon.ico')
+  let icon;
+  if (os.platform() === "win32") {
+    icon = path.join(__dirname, "assets", "icons", "tray-icon.ico");
   } else {
-    icon = path.join(__dirname, 'assets', 'icons', 'tray-icon.png')
+    icon = path.join(__dirname, "assets", "icons", "tray-icon.png");
   }
 
-  global.tray = new Tray(icon)
-  global.tray.setToolTip('Platzipics')
-  global.tray.on('click', () => {
-    global.win.isVisible() ? global.win.hide() : global.win.show()
-  })
+  global.tray = new Tray(icon);
+  global.tray.setToolTip("Platzipics");
+  global.tray.on("click", () => {
+    global.win.isVisible() ? global.win.hide() : global.win.show();
+  });
 
   // Carga una url desde el folder renderer
-  global.win.loadURL(`file://${__dirname}/renderer/index.html`)
-})
+  global.win.loadURL(`file://${__dirname}/renderer/index.html`);
+});

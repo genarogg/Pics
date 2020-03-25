@@ -78,7 +78,7 @@ function loadImages(images) {
               <img class="media-object pull-left" src="${images[i].src}" height="32">
               <div class="media-body">
                 <strong>${images[i].filename}</strong>
-                <p>${images[i].size}</p>
+                <p>${images[i].size}</p> 
               </div>
             </li>`;
     imagesList.insertAdjacentHTML("beforeend", node);
