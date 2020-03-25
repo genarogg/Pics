@@ -31,11 +31,11 @@ app.on('ready', () => {
 
   // creando una ventana
   global.win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1000,
+    height: 800,
     title: 'Platzipics',
     center: true,
-    maximizable: false,
+    maximizable: true,
     show: false,
     icon: path.join(__dirname, 'assets', 'icons', 'main-icon.png')
   })
