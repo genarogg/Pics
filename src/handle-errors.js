@@ -3,7 +3,7 @@ import { app, dialog } from 'electron'
 function relaunchApp (win) {
   dialog.showMessageBox(win, {
     type: 'error',
-    title: 'Platzipics',
+    title: 'Pics',
     message: 'Ocurrió un error inesperado, se reiniciará el aplicativo'
   }, () => {
     app.relaunch()
@@ -19,7 +19,7 @@ function setupErrors (win) {
   win.on('unresponsive', () => {
     dialog.showMessageBox(win, {
       type: 'warning',
-      title: 'Platzipics',
+      title: 'Pics',
       message: 'Un proceso está tardando demasiado, puede esperar o reiniciar el aplicativo manualmente'
     })
   })

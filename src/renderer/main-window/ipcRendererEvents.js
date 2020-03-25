@@ -150,7 +150,7 @@ function pasteImage() {
   } else {
     showDialog(
       "error",
-      "Platzipics",
+      "Pics",
       "No hay una imagen valida en el portapapeles"
     );
   }

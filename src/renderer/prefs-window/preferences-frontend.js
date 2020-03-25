@@ -13,7 +13,7 @@ window.addEventListener("load", () => {
   }
 
   if (settings.has("cloudup.passwd")) {
-    const decipher = crypto.createDecipher("aes192", "Platzipics");
+    const decipher = crypto.createDecipher("aes192", "Pics");
     let decrypted = decipher.update(
       settings.get("cloudup.passwd"),
       "hex",
@@ -40,7 +40,7 @@ function saveButton() {
 
   saveButton.addEventListener("click", () => {
     if (prefsForm.reportValidity()) {
-      const cipher = crypto.createCipher("aes192", "Platzipics");
+      const cipher = crypto.createCipher("aes192", "Pics");
       let encrypted = cipher.update(
         document.getElementById("cloudup-passwd").value
       );
@@ -56,7 +56,7 @@ function saveButton() {
     } else {
       ipcRenderer.send("show-dialog", {
         type: "error",
-        title: "Platzipics",
+        title: "Pics",
         message: "Por favor complete los campos requeridos"
       });
     }

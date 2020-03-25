@@ -35,9 +35,9 @@ app.on("ready", () => {
 
   // creando una ventana
   global.win = new BrowserWindow({
-    width: 1000,
-    height: 800,
-    title: "Platzipics",
+    width: 1200,
+    height: 768,
+    title: "Pics | by: Genarogg",
     center: true,
     maximizable: true,
     show: false,
@@ -80,7 +80,7 @@ app.on("ready", () => {
   }
 
   global.tray = new Tray(icon);
-  global.tray.setToolTip("Platzipics");
+  global.tray.setToolTip("Pics");
   global.tray.on("click", () => {
     global.win.isVisible() ? global.win.hide() : global.win.show();
   });
