@@ -1,4 +1,4 @@
-import { ipcRenderer, clipboard, remote } from "electron";
+import { ipcRenderer, clipboard, remote, shell } from "electron";
 import settings from "electron-settings";
 import {
   addImagesEvents,
@@ -139,6 +139,7 @@ function uploadImage() {
     );
   }
 }
+
 function pasteImage() {
   const image = clipboard.readImage();
   const data = image.toDataURL();

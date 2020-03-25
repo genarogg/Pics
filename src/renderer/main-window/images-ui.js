@@ -1,77 +1,77 @@
-import url from 'url'
-import path from 'path'
-import { applyFilter } from './filters'
+import url from "url";
+import path from "path";
+import { applyFilter } from "./filters";
 
-function addImagesEvents () {
-  const thumbs = document.querySelectorAll('li.list-group-item')
+function addImagesEvents() {
+  const thumbs = document.querySelectorAll("li.list-group-item");
 
   for (let i = 0, length1 = thumbs.length; i < length1; i++) {
-    thumbs[i].addEventListener('click', function () {
-      changeImage(this)
-    })
+    thumbs[i].addEventListener("click", function() {
+      changeImage(this);
+    });
   }
 }
 
-function changeImage (node) {
+function changeImage(node) {
   if (node) {
-    const selected = document.querySelector('li.selected')
+    const selected = document.querySelector("li.selected");
     if (selected) {
-      selected.classList.remove('selected')
+      selected.classList.remove("selected");
     }
 
-    node.classList.add('selected')
-    const image = document.getElementById('image-displayed')
-    image.src = node.querySelector('img').src
-    image.dataset.original = image.src
-    document.getElementById('filters').selectedIndex = 0
+    node.classList.add("selected");
+    const image = document.getElementById("image-displayed");
+    image.src = node.querySelector("img").src;
+    image.dataset.original = image.src;
+    document.getElementById("filters").selectedIndex = 0;
   } else {
-    document.getElementById('image-displayed').src = ''
+    document.getElementById("image-displayed").src = "";
   }
 }
 
-function selectFisrtImage () {
-  const image = document.querySelector('li.list-group-item:not(.hidden)')
-  changeImage(image)
+function selectFisrtImage() {
+  const image = document.querySelector("li.list-group-item:not(.hidden)");
+  changeImage(image);
 }
 
-function selectEvent () {
-  const select = document.getElementById('filters')
+function selectEvent() {
+  const select = document.getElementById("filters");
 
-  select.addEventListener('change', function () {
-    applyFilter(this.value, document.getElementById('image-displayed'))
-  })
+  select.addEventListener("change", function() {
+    applyFilter(this.value, document.getElementById("image-displayed"));
+  });
 }
 
-function searchImagesEvent () {
-  const searchBox = document.getElementById('search-box')
+function searchImagesEvent() {
+  const searchBox = document.getElementById("search-box");
 
-  searchBox.addEventListener('keyup', function () {
-    const regex = new RegExp(this.value.toLowerCase(), 'gi')
+  searchBox.addEventListener("keyup", function() {
+    const regex = new RegExp(this.value.toLowerCase(), "gi");
 
     if (this.value.length > 0) {
-      const thumbs = document.querySelectorAll('li.list-group-item img')
+      const thumbs = document.querySelectorAll("li.list-group-item img");
       for (let i = 0, length1 = thumbs.length; i < length1; i++) {
-        const fileUrl = url.parse(thumbs[i].src)
-        const fileName = path.basename(fileUrl.pathname)
+        const fileUrl = url.parse(thumbs[i].src);
+        const fileName = path.basename(fileUrl.pathname);
         if (fileName.match(regex)) {
-          thumbs[i].parentNode.classList.remove('hidden')
+          thumbs[i].parentNode.classList.remove("hidden");
         } else {
-          thumbs[i].parentNode.classList.add('hidden')
+          thumbs[i].parentNode.classList.add("hidden");
         }
       }
 
-      selectFisrtImage()
+      selectFisrtImage();
     } else {
-      const hidden = document.querySelectorAll('li.hidden')
+      const hidden = document.querySelectorAll("li.hidden");
       for (let i = 0, length1 = hidden.length; i < length1; i++) {
-        hidden[i].classList.remove('hidden')
+        hidden[i].classList.remove("hidden");
       }
     }
-  })
+  });
 }
 
-function loadImages (images) {
-  const imagesList = document.querySelector('ul.list-group')
+function loadImages(images) {
+  const imagesList = document.querySelector("ul.list-group");
 
   for (let i = 0, length1 = images.length; i < length1; i++) {
     const node = `<li class="list-group-item">
@@ -80,21 +80,21 @@ function loadImages (images) {
                 <strong>${images[i].filename}</strong>
                 <p>${images[i].size}</p>
               </div>
-            </li>`
-    imagesList.insertAdjacentHTML('beforeend', node)
+            </li>`;
+    imagesList.insertAdjacentHTML("beforeend", node);
   }
 }
 
-function clearImages () {
-  const oldImages = document.querySelectorAll('li.list-group-item')
+function clearImages() {
+  const oldImages = document.querySelectorAll("li.list-group-item");
 
   for (let i = 0, length1 = oldImages.length; i < length1; i++) {
-    oldImages[i].parentNode.removeChild(oldImages[i])
+    oldImages[i].parentNode.removeChild(oldImages[i]);
   }
 }
 
-function print(){
-  window.print()
+function print() {
+  window.print();
 }
 
 module.exports = {
@@ -106,4 +106,4 @@ module.exports = {
   clearImages: clearImages,
   loadImages: loadImages,
   print: print
-}
+};
