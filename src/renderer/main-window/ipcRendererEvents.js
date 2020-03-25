@@ -139,6 +139,13 @@ function uploadImage() {
     );
   }
 }
+function linkTo(){
+  const link = document.getElementById("linkToMyBrand")
+
+  link.addEventListener("click",() =>{
+    shell.openExternal("https://genarogg.tk/portafolio");
+  })
+}
 
 function pasteImage() {
   const image = clipboard.readImage();
@@ -162,5 +169,6 @@ module.exports = {
   openDirectory: openDirectory,
   openPreferences: openPreferences,
   uploadImage: uploadImage,
+  linkTo: linkTo,
   pasteImage: pasteImage
 };

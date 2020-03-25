@@ -4,7 +4,8 @@ import {
   saveFile,
   openPreferences,
   uploadImage,
-  pasteImage
+  pasteImage,
+  linkTo
 } from "./main-window/ipcRendererEvents";
 import {
   addImagesEvents,
@@ -26,6 +27,7 @@ window.addEventListener("load", () => {
   buttonEvent("print-button", print);
   buttonEvent("upload-button", uploadImage);
   buttonEvent("paste-button", pasteImage);
+  buttonEvent("linkToMyBrand", linkTo)
 });
 
 function buttonEvent(id, func) {
