@@ -79,3 +79,78 @@ body,
   background-color: rgba(0, 0, 0, 0.84);
   color: #fff;
 }
+
+.toolbar-footer {
+  border-top: 1px solid #ccc;
+  background-color: rgba(0, 0, 0, 0.84);
+}
+
+.image-toolbar {
+  position: initial;
+}
+
+.list-group-item {
+  color: #bbb;
+}
+
+.form-control:focus {
+  border-color: #3498db;
+  box-shadow: none;
+}
+.form-control {
+  background-color: #333;
+}
+
+.toolbar-actions {
+  margin: 0;
+  padding-right: 3px;
+  padding-top: 8px;
+  padding-left: 3px;
+  padding-bottom: 6px;
+  -webkit-app-region: drag;
+  background-color: rgba(0, 0, 0, 0.84);
+}
+
+.btn {
+  background: #333 !important;
+  border-radius: 4px;
+}
+
+.btn .icon {
+  color: #fff;
+}
+
+.btn {
+  color: #3498db;
+}
+
+.filter-label {
+  color: #fff;
+}
+
+.pull-right {
+  color: #3398db;
+  background-color: #333;
+  border-radius: 4px;
+  padding: 2px 14px;
+}
+
+label {
+  color: #fff;
+}
+
+/* SeudoClases */
+::selection {
+  background: #3498db;
+  color: #fff;
+  text-shadow: none;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  background-color: #000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3498db;
+}
