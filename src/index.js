@@ -1,12 +1,12 @@
 "use strict";
 
 // instanciando los objetos app y BrowserWindow
-import { app, BrowserWindow, Tray, globalShortcut, protocol } from "electron";
-import devtools from "./devtools";
-import setIpcMain from "./ipcMainEvents";
-import handleErrors from "./handle-errors";
-import os from "os";
-import path from "path";
+const { app, BrowserWindow, Tray, globalShortcut, protocol } = require('electron')
+const devtools = require ("./devtools");
+const setIpcMain = require ("./ipcMainEvents");
+const handleErrors = require ("./handle-errors");
+const os = require ("os");
+const path = require ("path");
 
 global.win; // eslint-disable-line
 global.tray; // eslint-disable-line

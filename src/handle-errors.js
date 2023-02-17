@@ -1,4 +1,4 @@
-import { app, dialog } from 'electron'
+const { app, dialog } = require ('electron')
 
 function relaunchApp (win) {
   dialog.showMessageBox(win, {

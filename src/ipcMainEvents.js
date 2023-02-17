@@ -1,8 +1,8 @@
-import { ipcMain, dialog } from 'electron'
-import isImage from 'is-image'
-import filesize from 'filesize'
-import fs from 'fs'
-import path from 'path'
+const { ipcMain, dialog } = require ('electron')
+const isImage = require ('is-image')
+const filesize = require ('filesize')
+const fs = require ('fs')
+const path = require ('path')
 
 function setMainIpc (win) {
   ipcMain.on('open-directory', (event) => {

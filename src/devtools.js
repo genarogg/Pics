@@ -1,5 +1,5 @@
-import { enableLiveReload } from "electron-compile";
-import electronDebug from "electron-debug";
+const { enableLiveReload } = ("electron-compile");
+const electronDebug = ("electron-debug");
 
 module.exports = function devtools() {
   enableLiveReload();
